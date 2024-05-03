@@ -1,0 +1,62 @@
+name: uxplay
+version: v1.68.3
+license: GPL-3.0
+grade: stable
+confinement: strict
+base: core22
+summary: AirPlay-Mirror and AirPlay-Audio server
+description: |
+  Highlights:
+
+  - GPLv3, open source.
+  - Originally supported only AirPlay Mirror protocol, now has added support for AirPlay Audio-only (Apple Lossless ALAC) streaming from current iOS/iPadOS clients. There is no support for Airplay2 video-streaming protocol, and none is planned.
+  - macOS computers (2011 or later, both Intel and "Apple Silicon" M1/M2 systems) can act either as AirPlay clients, or as the server running UxPlay. Using AirPlay, UxPlay can emulate a second display for macOS clients.
+  - Support for older iOS clients (such as 32-bit iPad 2nd gen., iPod Touch 5th gen. and iPhone 4S, when upgraded to iOS 9.3.5, or later 64-bit devices), plus a Windows AirPlay-client emulator, AirMyPC.
+  - Uses GStreamer plugins for audio and video rendering (with options to select different hardware-appropriate output "videosinks" and "audiosinks", and a fully-user-configurable video streaming pipeline).
+  - Support for server behind a firewall.
+  - Raspberry Pi support both with and without hardware video decoding by the Broadcom GPU. Tested on Raspberry Pi Zero 2 W, 3 Model B+, 4 Model B, and 5.
+  - Support for running on Microsoft Windows (builds with the MinGW-64 compiler in the unix-like MSYS2 environment).
+
+
+architectures:
+  - build-on: [amd64]
+    build-for: [amd64]
+  - build-on: [arm64]
+    build-for: [arm64]
+
+apps:
+  uxplay:
+    extensions: [ gnome ]
+    plugs: [ avahi-control, network, network-bind, opengl, wayland ]
+    # daemon: simple
+    # daemon-scope: user
+    environment:
+      GST_PLUGIN_PATH: $SNAP/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/gstreamer-1.0
+      LD_LIBRARY_PATH: $SNAP/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/blas:$SNAP/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/lapack:$LD_LIBRARY_PATH
+    command: usr/bin/uxplay
+
+parts:
+  uxplay:
+    plugin: cmake
+    source: https://github.com/FDH2/UxPlay.git
+    source-tag: v1.68.3
+    cmake-parameters:
+      - -DCMAKE_INSTALL_PREFIX=/usr
+      - -DNO_X11_DEPS=ON
+      - -DNO_MARCH_NATIVE=ON
+    build-packages:
+      - cmake
+      - ninja-build
+      - build-essential
+      - dpkg-dev
+      - libssl-dev
+      - libplist-dev
+      - libavahi-compat-libdnssd-dev
+      - libgstreamer1.0-dev
+      - libgstreamer-plugins-base1.0-dev
+    stage-packages:
+      - libavahi-compat-libdnssd1
+      - libplist3
+      - gstreamer1.0-plugins-good
+      - gstreamer1.0-plugins-bad
+      - gstreamer1.0-libav
