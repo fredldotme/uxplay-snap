@@ -27,7 +27,7 @@ architectures:
 apps:
   uxplay:
     extensions: [ gnome ]
-    plugs: [ avahi-control, network, network-bind, opengl, wayland ]
+    plugs: [ audio-playback, avahi-control, network, network-bind, opengl, wayland ]
     # daemon: simple
     # daemon-scope: user
     environment:
