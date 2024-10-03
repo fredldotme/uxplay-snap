@@ -1,5 +1,5 @@
 name: uxplay
-version: v1.68.3
+adopt-info: uxplay
 license: GPL-3.0
 grade: stable
 confinement: strict
@@ -39,11 +39,15 @@ parts:
   uxplay:
     plugin: cmake
     source: https://github.com/FDH2/UxPlay.git
-    source-tag: v1.68.3
+    source-tag: v1.69
     cmake-parameters:
       - -DCMAKE_INSTALL_PREFIX=/usr
       - -DNO_X11_DEPS=ON
       - -DNO_MARCH_NATIVE=ON
+    override-build: |
+      cd $CRAFT_PART_SRC
+      craftctl set version="$(git describe --abbrev=0 --tags)"
+      craftctl default
     build-packages:
       - cmake
       - ninja-build
