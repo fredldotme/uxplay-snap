@@ -39,7 +39,7 @@ parts:
   uxplay:
     plugin: cmake
     source: https://github.com/FDH2/UxPlay.git
-    source-tag: v1.69
+    source-tag: v1.70
     cmake-parameters:
       - -DCMAKE_INSTALL_PREFIX=/usr
       - -DNO_X11_DEPS=ON
