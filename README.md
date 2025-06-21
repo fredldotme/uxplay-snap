@@ -3,7 +3,7 @@
 
 ## Upstream
 
-[![uxplay](https://img.shields.io/github/v/release/FDH2/UxPlay?logo=github)](https://github.com/FDH2/UxPlay)
+![GitHub Release](https://img.shields.io/github/v/release/FDH2/UxPlay?link=https%3A%2F%2Fgithub.com%2FFDH2%2FUxPlay)
 
 **NOTE:** X11 is not supported by this snap.
 
