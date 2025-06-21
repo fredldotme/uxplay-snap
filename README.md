@@ -1,7 +1,7 @@
 ## uxplay-snap
 [![uxplay](https://snapcraft.io/uxplay/badge.svg)](https://snapcraft.io/uxplay)
 
-[Upstream Project Link](https://github.com/FDH2/UxPlay) [![Upstrem](https://img.shields.io/github/v/release/FDH2/UxPlay?logo=github)](https://github.com/FDH2/UxPlay)
+Upstream: [![UxPlay](https://img.shields.io/github/v/release/FDH2/UxPlay?logo=github)](https://github.com/FDH2/UxPlay)
 
 **NOTE:** X11 is not supported by this snap.
 
