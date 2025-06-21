@@ -19,7 +19,7 @@ confinement: strict
 
 platforms:
   amd64:
-  # arm64:
+  arm64:
 
 apps:
   uxplay:
@@ -28,7 +28,6 @@ apps:
     # daemon: simple
     # daemon-scope: user
     environment:
-      UXPLAYRC: $SNAP_USER_COMMON/uxplayrc
       GST_PLUGIN_PATH: $SNAP/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/gstreamer-1.0
       LD_LIBRARY_PATH: $SNAP/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/blas:$SNAP/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/lapack:$LD_LIBRARY_PATH
     command: usr/bin/uxplay
@@ -39,6 +38,7 @@ parts:
     source: https://github.com/FDH2/UxPlay.git
     source-type: git
     source-tag: 'v1.72.1'
+    source-depth: 1
     cmake-parameters:
       - -DCMAKE_INSTALL_PREFIX=/usr
       - -DNO_X11_DEPS=ON

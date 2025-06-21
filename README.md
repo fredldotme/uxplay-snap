@@ -34,19 +34,4 @@ see: [Official Docs](https://github.com/FDH2/UxPlay?tab=readme-ov-file#usage)
 
 Due to the packaging with Snap, the default paths are different.
 
-- Default data directory: /home/$Your_User_Name/snap/uxplay/current/
-- Default config directory: /home/$Your_User_Name/snap/uxplay/current/.config/uxplay
-
-## Enable Service (Running uxplay in 'monitor' mode in background)
-
-[What is Monitor Mode?](https://github.com/abraunegg/onedrive/blob/master/docs/usage.md#ongoing-synchronisation-operational-mode-monitor-mode)
-
-```bash
-$ mkdir -p ~/.config/systemd/user/
-$ wget https://raw.githubusercontent.com/boukendesho/uxplay-snap/main/uxplay.service -O ~/.config/systemd/user/uxplay.service
-$ systemctl --user daemon-reload
-$ systemctl --user enable --now uxplay.service
-# check service status
-$ systemctl --user status uxplay.service
-# check service log
-$ journalctl --user-unit uxplay.service
+- Default config directory: /home/$Your_User_Name/snap/uxplay/current/.config/
