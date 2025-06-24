@@ -1,28 +1,25 @@
 name: uxplay
+base: core24
 adopt-info: uxplay
 license: GPL-3.0
-grade: stable
-confinement: strict
-base: core22
 summary: AirPlay-Mirror and AirPlay-Audio server
 description: |
-  Highlights:
+  **NOTE:** X11 is not supported by this snap.
 
-  - GPLv3, open source.
-  - Originally supported only AirPlay Mirror protocol, now has added support for AirPlay Audio-only (Apple Lossless ALAC) streaming from current iOS/iPadOS clients. There is no support for Airplay2 video-streaming protocol, and none is planned.
-  - macOS computers (2011 or later, both Intel and "Apple Silicon" M1/M2 systems) can act either as AirPlay clients, or as the server running UxPlay. Using AirPlay, UxPlay can emulate a second display for macOS clients.
-  - Support for older iOS clients (such as 32-bit iPad 2nd gen., iPod Touch 5th gen. and iPhone 4S, when upgraded to iOS 9.3.5, or later 64-bit devices), plus a Windows AirPlay-client emulator, AirMyPC.
-  - Uses GStreamer plugins for audio and video rendering (with options to select different hardware-appropriate output "videosinks" and "audiosinks", and a fully-user-configurable video streaming pipeline).
-  - Support for server behind a firewall.
-  - Raspberry Pi support both with and without hardware video decoding by the Broadcom GPU. Tested on Raspberry Pi Zero 2 W, 3 Model B+, 4 Model B, and 5.
-  - Support for running on Microsoft Windows (builds with the MinGW-64 compiler in the unix-like MSYS2 environment).
+  UxPlay is a AirPlay Unix mirroring server.
 
+  It lets you mirror your iPhone, iPad or Mac desktop screen to your desktop, where it appears in a floating window that can be shared with other apps, like Discord and OBS Studio.
 
-architectures:
-  - build-on: [amd64]
-    build-for: [amd64]
-  - build-on: [arm64]
-    build-for: [arm64]
+  UxPlay is a screen mirror only. You can't interact with what you see on the screen.
+
+  This snap is not affiliated with the upstream project in any way. If you encounter any issues, please kindly report it here.
+
+grade: stable
+confinement: strict
+
+platforms:
+  amd64:
+  arm64:
 
 apps:
   uxplay:
@@ -39,20 +36,21 @@ parts:
   uxplay:
     plugin: cmake
     source: https://github.com/FDH2/UxPlay.git
-    source-tag: v1.70
+    source-type: git
+    source-tag: 'v1.72.1'
+    source-depth: 1
     cmake-parameters:
       - -DCMAKE_INSTALL_PREFIX=/usr
       - -DNO_X11_DEPS=ON
       - -DNO_MARCH_NATIVE=ON
-    override-build: |
-      cd $CRAFT_PART_SRC
-      craftctl set version="$(git describe --abbrev=0 --tags)"
+    override-pull: |
       craftctl default
+      craftctl set version=$(git describe --abbrev=0 --tags | tr -d 'v')
     build-packages:
-      - cmake
-      - ninja-build
-      - build-essential
-      - dpkg-dev
+      # - cmake
+      # - ninja-build
+      # - build-essential
+      # - dpkg-dev
       - libssl-dev
       - libplist-dev
       - libavahi-compat-libdnssd-dev
@@ -60,8 +58,16 @@ parts:
       - libgstreamer-plugins-base1.0-dev
     stage-packages:
       - libavahi-compat-libdnssd1
-      - libplist3
+      - libplist-2.0-4
+      - gstreamer1.0-plugins-base
       - gstreamer1.0-plugins-good
       - gstreamer1.0-plugins-bad
+      - gstreamer1.0-gl
       - gstreamer1.0-libav
+      - gstreamer1.0-pipewire
+      - gstreamer1.0-tools
       - gstreamer1.0-vaapi
+    prime:
+      - -usr/share/doc
+      - -usr/share/icons
+      - -usr/share/locale
