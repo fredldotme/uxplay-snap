@@ -37,7 +37,7 @@ parts:
     plugin: cmake
     source: https://github.com/FDH2/UxPlay.git
     source-type: git
-    source-tag: 'v1.72.1'
+    source-tag: 'v1.72.2'
     source-depth: 1
     cmake-parameters:
       - -DCMAKE_INSTALL_PREFIX=/usr
